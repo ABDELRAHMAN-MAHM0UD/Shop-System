@@ -32,7 +32,7 @@ class _SalingRowState extends State<SalingRow> {
           children: [
             Container(
                 height: height * .06,
-                width: widget.width * .5,
+                width: widget.width * .57,
                 child: TextField(
                   textAlign: TextAlign.center,
                   style: TextStyle(color: Colors.black,
@@ -51,7 +51,7 @@ class _SalingRowState extends State<SalingRow> {
               widget.text,
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 30,
+                fontSize: 29,
                 fontWeight: FontWeight.w600,
               ),
             ),

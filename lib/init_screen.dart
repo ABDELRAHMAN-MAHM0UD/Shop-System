@@ -24,20 +24,20 @@ class InitScreen extends StatelessWidget {
           children: [
             SizedBox(
               height: MediaQuery.of(context).size.height * .1,
-              width: MediaQuery.of(context).size.width * .68,
+              width: MediaQuery.of(context).size.width * .8,
               child: ElevatedButton(
                   onPressed: () {
                     Navigator.pushNamed(context, NewSalePage.routeName);
                   },
                   child: Text(
                     "عملية بيع جديدة",
-                    style: TextStyle(fontSize: 34, fontWeight: FontWeight.w700,
+                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700,
                     color: Color(0xff302b63)),
                   )),
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height * .1,
-              width: MediaQuery.of(context).size.width * .68,
+              width: MediaQuery.of(context).size.width * .8,
               child: ElevatedButton(
                   onPressed: () {
                     Navigator.pushNamed(context, Earnings.routeName);

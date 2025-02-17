@@ -79,7 +79,7 @@ class _EarningsState extends State<Earnings> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SizedBox(height: height * 0.05),
+              SizedBox(height: height * 0.06),
               Text(
                 "الأرباح",
                 textAlign: TextAlign.center,
@@ -91,7 +91,7 @@ class _EarningsState extends State<Earnings> {
               ),
               SizedBox(height: height * .08),
               Container(
-                margin: EdgeInsets.only(left: 15, right: 15),
+                margin: EdgeInsets.only(left: 12, right: 12),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -173,22 +173,17 @@ class _EarningsState extends State<Earnings> {
                     Table(
                       border: TableBorder.all(
                         color: Colors.white, // White grid lines
-                        width: .9,
+                        width: 0.9,
                       ),
                       children: [
-                        // Header Row with titleLarge style
+                        // Header Row
                         TableRow(
                           decoration: BoxDecoration(
                             color: Colors.transparent, // Transparent background for header
                           ),
                           children: [
                             Text(
-                              "اسم الجهاز",
-                              style: Theme.of(context).textTheme.titleLarge,
-                              textAlign: TextAlign.center,
-                            ),
-                            Text(
-                              "التاريخ",
+                              "إجمالي الربح",
                               style: Theme.of(context).textTheme.titleLarge,
                               textAlign: TextAlign.center,
                             ),
@@ -198,36 +193,51 @@ class _EarningsState extends State<Earnings> {
                               textAlign: TextAlign.center,
                             ),
                             Text(
-                              " إجمالي الربح",
+                              "التاريخ",
+                              style: Theme.of(context).textTheme.titleLarge,
+                              textAlign: TextAlign.center,
+                            ),
+                            Text(
+                              "اسم الجهاز",
+                              style: Theme.of(context).textTheme.titleLarge,
+                              textAlign: TextAlign.center,
+                            ),
+                            Text(
+                              "م", // Numbering Column
                               style: Theme.of(context).textTheme.titleLarge,
                               textAlign: TextAlign.center,
                             ),
                           ],
                         ),
-                        // Data rows with titleMedium style
-                        for (var sale in filteredSales)
+                        // Data Rows
+                        for (var i = 0; i < filteredSales.length; i++)
                           TableRow(
                             decoration: BoxDecoration(
                               color: Colors.transparent, // Transparent background for data rows
                             ),
                             children: [
                               Text(
-                                sale.name,
+                                filteredSales[i].totalEarnForDevice.toString(),
                                 style: Theme.of(context).textTheme.titleMedium,
                                 textAlign: TextAlign.center,
                               ),
                               Text(
-                                "${sale.date.day}/${sale.date.month}",
+                                filteredSales[i].sellingPrice.toString(),
                                 style: Theme.of(context).textTheme.titleMedium,
                                 textAlign: TextAlign.center,
                               ),
                               Text(
-                                sale.sellingPrice.toString(),
+                                "${filteredSales[i].date.day}/${filteredSales[i].date.month}",
                                 style: Theme.of(context).textTheme.titleMedium,
                                 textAlign: TextAlign.center,
                               ),
                               Text(
-                                sale.totalEarnForDevice.toString(),
+                                filteredSales[i].name,
+                                style: Theme.of(context).textTheme.titleMedium,
+                                textAlign: TextAlign.center,
+                              ),
+                              Text(
+                                (i + 1).toString(), // Row numbering
                                 style: Theme.of(context).textTheme.titleMedium,
                                 textAlign: TextAlign.center,
                               ),
