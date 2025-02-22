@@ -51,4 +51,22 @@ class ViewModel {
       salesList = [];
     }
   }
+
+  Future<void> removeItem(int index) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    // Ensure the index is valid
+    if (index < 0 || index >= salesList.length) return;
+
+    // Remove the item from the list
+    salesList.removeAt(index);
+
+    // Save the updated list
+    final List<Map<String, dynamic>> jsonList =
+    salesList.map((soled) => soled.toJson()).toList();
+    final jsonString = jsonEncode(jsonList);
+    await prefs.setString("soledItems", jsonString);
+  }
+
+
 }

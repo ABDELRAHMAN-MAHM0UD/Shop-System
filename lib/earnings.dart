@@ -183,17 +183,7 @@ class _EarningsState extends State<Earnings> {
                           ),
                           children: [
                             Text(
-                              "إجمالي الربح",
-                              style: Theme.of(context).textTheme.titleLarge,
-                              textAlign: TextAlign.center,
-                            ),
-                            Text(
-                              "سعر البيع",
-                              style: Theme.of(context).textTheme.titleLarge,
-                              textAlign: TextAlign.center,
-                            ),
-                            Text(
-                              "التاريخ",
+                              "م", // Numbering Column
                               style: Theme.of(context).textTheme.titleLarge,
                               textAlign: TextAlign.center,
                             ),
@@ -203,46 +193,43 @@ class _EarningsState extends State<Earnings> {
                               textAlign: TextAlign.center,
                             ),
                             Text(
-                              "م", // Numbering Column
+                              "التاريخ",
                               style: Theme.of(context).textTheme.titleLarge,
                               textAlign: TextAlign.center,
                             ),
+
+                            Text(
+                              "سعر البيع",
+                              style: Theme.of(context).textTheme.titleLarge,
+                              textAlign: TextAlign.center,
+                            ),
+
+
+                            Text(
+                              "إجمالي الربح",
+                              style: Theme.of(context).textTheme.titleLarge,
+                              textAlign: TextAlign.center,
+                            ),
+
                           ],
                         ),
                         // Data Rows
                         for (var i = 0; i < filteredSales.length; i++)
-                          TableRow(
-                            decoration: BoxDecoration(
-                              color: Colors.transparent, // Transparent background for data rows
-                            ),
-                            children: [
-                              Text(
-                                filteredSales[i].totalEarnForDevice.toString(),
-                                style: Theme.of(context).textTheme.titleMedium,
-                                textAlign: TextAlign.center,
-                              ),
-                              Text(
-                                filteredSales[i].sellingPrice.toString(),
-                                style: Theme.of(context).textTheme.titleMedium,
-                                textAlign: TextAlign.center,
-                              ),
-                              Text(
-                                "${filteredSales[i].date.day}/${filteredSales[i].date.month}",
-                                style: Theme.of(context).textTheme.titleMedium,
-                                textAlign: TextAlign.center,
-                              ),
-                              Text(
-                                filteredSales[i].name,
-                                style: Theme.of(context).textTheme.titleMedium,
-                                textAlign: TextAlign.center,
-                              ),
-                              Text(
-                                (i + 1).toString(), // Row numbering
-                                style: Theme.of(context).textTheme.titleMedium,
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
+    TableRow(
+      decoration: BoxDecoration(
+        color: Colors.transparent,
+      ),
+      children: [
+        _buildTableCell((i + 1).toString(), context, i),
+
+        _buildTableCell(filteredSales[i].name, context, i),
+        _buildTableCell("${filteredSales[i].date.day}/${filteredSales[i].date.month}", context, i),
+        _buildTableCell(filteredSales[i].sellingPrice.toString(), context, i),
+        _buildTableCell(filteredSales[i].totalEarnForDevice.toString(), context, i),
+      ],
+    ),
+
+
                       ],
                     ),
                     SizedBox(height: height * 0.03),
@@ -262,6 +249,54 @@ class _EarningsState extends State<Earnings> {
 
     );
 
+  }
+
+  // Function to build each table cell with a GestureDetector
+  Widget _buildTableCell(String text, BuildContext context, int index) {
+    return GestureDetector(
+      onLongPress: () {
+        print("Long pressed on row ${index + 1}");
+
+
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+                title: Text("هل تريد إزالة الجهاز؟"),
+                actions: [
+                TextButton(
+                onPressed: () {
+                  viewModel.removeItem(index);
+                  Navigator.of(context).pop(); // Close the dialog
+                  setState(() {
+
+                  });
+            },
+            child: Text("نعم"),
+            ),
+                TextButton(
+                onPressed: () {
+              Navigator.of(context).pop(); // Close the dialog
+            },
+            child: Text("الغاء"),
+            ),]
+            );
+          }
+            );
+
+
+
+        // Perform your long-press action here
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Text(
+          text,
+          style: Theme.of(context).textTheme.titleMedium,
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
   }
 
 
