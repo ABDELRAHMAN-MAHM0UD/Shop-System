@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop_management_system/earnings.dart';
 
+import 'customers.dart';
 import 'init_screen.dart';
 import 'new_sale_page.dart';
 
@@ -18,7 +19,9 @@ class MyApp extends StatelessWidget {
     routes: {
       NewSalePage.routeName: (_) => NewSalePage(),
       Earnings.routeName :(_)=> Earnings(),
-      InitScreen.routeName : (_)=> InitScreen()
+      InitScreen.routeName : (_)=> InitScreen(),
+      Customers.routeName : (_)=> Customers()
+
     },
       theme: ThemeData(
         textTheme: TextTheme(

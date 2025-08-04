@@ -50,7 +50,6 @@ class _EarningsState extends State<Earnings> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
     // Show loading indicator while data is being loaded
