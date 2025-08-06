@@ -100,6 +100,8 @@ class _AddCustomerBottomSheetState extends State<AddCustomerBottomSheet> {
         ElevatedButton(
             onPressed: (){
 
+              if(nameController.text != ""&& CustomerNum.text!=""){
+
           viewModel.addCustomer(CustomerObj(name: nameController.text,
               pageNumber: CustomerNum.text));
           Flushbar(
@@ -112,7 +114,20 @@ class _AddCustomerBottomSheetState extends State<AddCustomerBottomSheet> {
             margin: EdgeInsets.all(10),
             animationDuration: Duration(milliseconds: 400),
             messageText: Text("تم إضافة رقم العميل",style: TextStyle(color: Colors.white,fontSize: 24),textAlign: TextAlign.center,),
-          )..show(context);
+          )..show(context);}
+              else{
+                Flushbar(
+                  //message: ",
+                  messageColor: Colors.white,
+                  duration: Duration(seconds: 3),
+                  flushbarPosition: FlushbarPosition.TOP,
+                  backgroundColor: Colors.red,
+                  borderRadius: BorderRadius.circular(10),
+                  margin: EdgeInsets.all(10),
+                  animationDuration: Duration(milliseconds: 400),
+                  messageText: Text("برجاء إدخال الاسم ورقم الصفحة",style: TextStyle(color: Colors.white,fontSize: 24),textAlign: TextAlign.center,),
+                )..show(context);
+              }
 
         },
             child: Text("إضافة",style: TextStyle(
