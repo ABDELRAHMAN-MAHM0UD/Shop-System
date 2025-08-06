@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:shop_management_system/customer_obj.dart';
 import 'package:shop_management_system/view_model.dart';
+class CustomerRow extends StatefulWidget {
+  final int index;
+  final VoidCallback onDelete;
 
-class CustomerRow extends StatelessWidget {
-  int index;
+  CustomerRow({required this.index, required this.onDelete});
+
+  @override
+  State<CustomerRow> createState() => _CustomerRowState();
+}
+
+class _CustomerRowState extends State<CustomerRow> {
   ViewModel viewModel = ViewModel();
 
-  CustomerRow({required this.index});
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -18,7 +25,7 @@ class CustomerRow extends StatelessWidget {
             showDialog(
               context: context,
               builder: (context) => AlertDialog(
-                title: Text('حذف الرقم'),
+                title: Text('هل تريد حذف هذا الرقم'),
                 content: Text('سيتم حذف هذا الرقم نهائياً'),
                 actions: [
                   TextButton(
@@ -29,9 +36,10 @@ class CustomerRow extends StatelessWidget {
                   ),
                   ElevatedButton(
                     child: Text('حذف'),
-                    onPressed: () {
-                      viewModel.removeCustomer(index);
+                    onPressed: () async {
+                      await viewModel.removeCustomer(widget.index);
                       Navigator.of(context).pop();
+                      widget.onDelete(); // notify parent to refresh
                     },
                   ),
                 ],
@@ -42,7 +50,7 @@ class CustomerRow extends StatelessWidget {
         ),
 
         Text(
-          CustomerObj.customersList[index].pageNumber,
+          CustomerObj.customersList[widget.index].pageNumber,
           style: TextStyle(
             color: Colors.white,
             fontSize: 30,
@@ -53,7 +61,7 @@ class CustomerRow extends StatelessWidget {
         Container(
             width: width * .7,
             child: Text(
-              CustomerObj.customersList[index].name,
+              CustomerObj.customersList[widget.index].name,
               maxLines: 5,
               style: TextStyle(
                 color: Colors.white,
@@ -66,4 +74,6 @@ class CustomerRow extends StatelessWidget {
       ],
     );
   }
+
+
 }

@@ -1,17 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:shop_management_system/customer_obj.dart';
+import 'package:shop_management_system/view_model.dart';
 
 import 'bottom_sheet.dart';
 import 'customer_row.dart';
 
-class Customers extends StatelessWidget {
+class Customers extends StatefulWidget {
   const Customers({super.key});
   static const String routeName = "Customers";
+
+  @override
+  State<Customers> createState() => _CustomersState();
+}
+
+class _CustomersState extends State<Customers> {
+
+  List<int> filteredIndexes = [];
+  TextEditingController searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    filterSearch(''); // To load full list at start
+  }
 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+
+
 
     return Scaffold(
         body: Container(
@@ -66,7 +84,8 @@ class Customers extends StatelessWidget {
                     Container(
                         height: height * .06,
                         width: width * .75,
-                        child: TextField(
+                        child: TextField(controller: searchController,
+                          onChanged: filterSearch,
                           textAlign: TextAlign.right,
                           style: TextStyle(color: Colors.black,
                               overflow: TextOverflow.ellipsis,
@@ -78,6 +97,7 @@ class Customers extends StatelessWidget {
                             fillColor: Color(0xffeeeeee),
                             filled: true,
                             border: OutlineInputBorder(),
+
                           ),
 
                         ))
@@ -87,15 +107,41 @@ class Customers extends StatelessWidget {
                 ),
               ),
               Expanded(
-                  child: ListView.builder(
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: CustomerRow(index: index)
-                  );
-                },
-                itemCount: CustomerObj.customersList.length,
-              ))
+                child: ListView.builder(
+                  itemCount: filteredIndexes.length,
+                  itemBuilder: (context, index) {
+                    final originalIndex = filteredIndexes[index];
+                    return Padding(
+                      padding: const EdgeInsets.all(15),
+                     child: CustomerRow(
+                      index: originalIndex,
+                      onDelete: () {
+                        setState(() {
+                          filterSearch(searchController.text); // refresh after delete
+                        });
+                      },
+                    ),// your current logic
+                    );
+                  },
+                ),
+              ),
             ])));
   }
+
+  void filterSearch(String query) {
+    final allCustomers = CustomerObj.customersList;
+
+    setState(() {
+      if (query.isEmpty) {
+        filteredIndexes = List.generate(allCustomers.length, (i) => i);
+      } else {
+        filteredIndexes = List.generate(allCustomers.length, (i) => i)
+            .where((i) => allCustomers[i].name
+            .toLowerCase()
+            .contains(query.toLowerCase()))
+            .toList();
+      }
+    });
+  }
+
 }
